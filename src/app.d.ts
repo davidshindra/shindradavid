@@ -3,13 +3,15 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		theme: import('$lib/types').Theme
+		theme: Theme;
+		accentColor: AccentColor;
 	}
 	// interface Platform {}
 	// interface PrivateEnv {}
 	// interface PublicEnv {}
 	interface Session {
-    theme: import('$lib/types').Theme
-  }
+		theme: Theme;
+		accentColor: AccentColor;
+	}
 	// interface Stuff {}
 }

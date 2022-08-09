@@ -1,27 +1,32 @@
 // types
-import type { Writable } from "svelte/store";
-import type { Theme } from "$lib/types";
+import type { Writable } from 'svelte/store';
 // svelte
-import { writable } from "svelte/store";
-
-import { themeCookieName, defaultTheme } from "$lib/config";
-
-import Cookies from "universal-cookie";
+import { writable } from 'svelte/store';
+import { browser } from '$app/env';
+// 3rd party
+import Cookies from 'universal-cookie';
+// project
+import { cookieMaxAge, defaultClientPersonalizations, personalizationCookieName } from './config';
 
 const cookies = new Cookies();
-const yearInSeconds = 60 * 60 * 24 * 365;
 
-function cookieStore<T>(key: string, defaultValue: T, maxAge = yearInSeconds): Writable<T> {
-  const initialValue: T = cookies.get(key) ?? defaultValue;
-  const { set: setStore, ...store} = writable(initialValue);
+export const clientPersonalizations: Writable<ClientPersonalizations> = (function () {
+	let clientPersonalizations: ClientPersonalizations;
+	if (browser) {
+		clientPersonalizations = cookies.get(personalizationCookieName);
+	} else {
+		clientPersonalizations = defaultClientPersonalizations;
+	}
+	const { set: setStoreTo, ...store } = writable(clientPersonalizations);
 
-  return {
-    ...store,
-    set: (newValue: T) => {
-      setStore(newValue);
-      cookies.set(key, newValue, { maxAge });
-    },
-  };
-}
-
-export const theme = cookieStore<Theme>(themeCookieName, defaultTheme);
+	return {
+		...store,
+		set: (newPersonalizations: ClientPersonalizations) => {
+			cookies.set(personalizationCookieName, JSON.stringify(newPersonalizations), {
+				path: '/',
+				maxAge: cookieMaxAge
+			});
+			setStoreTo(newPersonalizations);
+		}
+	};
+})();

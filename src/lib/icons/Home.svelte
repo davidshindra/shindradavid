@@ -1,5 +1,19 @@
-<svg aria-labelledby="homeIcon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
-  <title id="homeIcon">home</title>
-  <path fill="none" d="M0 0h24v24H0z"/>
-  <path d="M19 21H5a1 1 0 0 1-1-1v-9H1l10.327-9.388a1 1 0 0 1 1.346 0L23 11h-3v9a1 1 0 0 1-1 1zm-6-2h5V9.157l-6-5.454-6 5.454V19h5v-6h2v6z"/>
+<svg
+	aria-labelledby="homeIcon"
+	role="img"
+	xmlns="http://www.w3.org/2000/svg"
+	class="h-6 w-6"
+	fill="none"
+	viewBox="0 0 24 24"
+	stroke="currentColor"
+	stroke-width="2"
+	width="1em"
+	height="1em"
+>
+	<title id="homeIcon">home</title>
+	<path
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+	/>
 </svg>

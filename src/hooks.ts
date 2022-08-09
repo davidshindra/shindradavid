@@ -1,29 +1,41 @@
-import type { Handle, GetSession } from '@sveltejs/kit';
-import type { CookiesWithTheme } from '$lib/types';
+import type { GetSession, Handle } from '@sveltejs/kit';
+
+import { cookieMaxAge, defaultClientPersonalizations } from '$lib/config';
+
+import { personalizationCookieName } from '$lib/config';
 
 import * as cookie from 'cookie';
 
-import { defaultTheme, cookieMaxAge, themeCookieName } from '$lib/config';
+export let handle: Handle = async ({ event, resolve }) => {
+	const reqCookies: ExtendedCookies = cookie.parse(event.request.headers.get('Cookie') || '');
 
+	if (reqCookies.personalization) {
+		const clientPersonalizations: ClientPersonalizations = JSON.parse(reqCookies.personalization);
+		event.locals.theme = clientPersonalizations.theme;
+		event.locals.accentColor = clientPersonalizations.accentColor;
+	} else {
+		event.locals.theme = defaultClientPersonalizations.theme;
+		event.locals.accentColor = defaultClientPersonalizations.accentColor;
+	}
 
-export const handle: Handle = async({ event, resolve}) => {
-  const cookies: CookiesWithTheme = cookie.parse(event.request.headers.get('Cookie') || '')
-  if (cookies[themeCookieName]) {
-    event.locals.theme = cookies[themeCookieName];
-  } else {
-    event.locals.theme = defaultTheme;
-  }
+	const response = await resolve(event);
 
-  const response = await resolve(event);
+	if (!reqCookies.personalization) {
+		response.headers.set(
+			'Set-Cookie',
+			cookie.serialize(personalizationCookieName, JSON.stringify(defaultClientPersonalizations), {
+				path: '/',
+				maxAge: cookieMaxAge
+			})
+		);
+	}
 
-  if (!cookies['theme']) {
-    const cookieOptions = {path: '/', maxAge: cookieMaxAge}
-    response.headers.set('Set-Cookie', cookie.serialize(themeCookieName, defaultTheme, {...cookieOptions}))
-  }
+	return response;
+};
 
-  return response
-}
-
-export const getSession: GetSession = ({locals}) => {
-  return { theme: locals.theme }
-}
+export const getSession: GetSession = ({ locals }) => {
+	return {
+		theme: locals.theme,
+		accentColor: locals.accentColor
+	};
+};
