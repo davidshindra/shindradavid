@@ -17,15 +17,17 @@
 		align-items: center;
 		justify-content: center;
 		line-height: 0;
-		width: 100%;
+		width: fit-content;
+    padding: .6rem;
 
 		&:hover {
 			color: var(--accent-color);
+      background-color: var(--accent-bg);
 		}
 
 		&.active {
 			color: var(--accent-color);
-			border-left: 2px solid var(--accent-color);
+      background-color: var(--accent-bg);
 		}
 
 		&__icon {

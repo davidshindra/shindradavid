@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 
 	import AccentColorComponent from '$lib/components/AccentColor.svelte';
+  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	$: currentAccentColor = browser ? $clientPersonalizations.accentColor : $session.accentColor;
 
@@ -30,6 +31,16 @@
 </svelte:head>
 
 <h1>Personalization</h1>
+
+<p>Manage your accent color and theme.</p>
+
+<section>
+  <h2>Theme</h2>
+  <div>
+    <ThemeToggle/>
+  </div>
+</section>
+
 
 <section>
 	<h2>Accent color: {selected}</h2>

@@ -27,3 +27,13 @@
 		@content;
 	}
 }
+
+@mixin section-spacing {
+  padding: 1rem;
+}
+
+
+@mixin section-heading {
+  padding: 1rem 0;
+  font-size: var(--fs-lg);
+}

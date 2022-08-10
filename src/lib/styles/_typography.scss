@@ -14,17 +14,21 @@
 	--fs-no: 1.6rem;
 	--fs-md: 2.2rem;
 	--fs-lg: 2.8rem;
-	--fs-xl: 3.4rem;
+	--fs-xl: 4rem;
 
 	@include mixins.screen-lg {
 		--fs-no: 1.8rem;
 		--fs-md: 2.6rem;
 		--fs-lg: 3.2rem;
-		--fs-xl: 3.6rem;
+		--fs-xl: 4.8rem;
 	}
 }
 
 body {
 	font-size: var(--fs-no);
 	font-family: var(--ff-sans);
+}
+
+svg {
+  line-height: 0;
 }
